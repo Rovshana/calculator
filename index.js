@@ -31,6 +31,25 @@ class Calculator {
   divide() {
     return this.num1 / this.num2;
   }
+
+  calculate() {
+    const [num1, operator, num2] = this.inputValue.split(" ");
+    switch (operator) {
+      case "+":
+        return this.add();
+      case "-":
+        return this.subs();
+      case "*":
+        return this.multiply();
+      case "/":
+        if (this.num2 === 0) {
+          return "Cannot divide by zero";
+        }
+        return this.divide();
+      default:
+        return "Invalid operator";
+    }
+  }
 }
 
 numberButtons.forEach((button) => {
@@ -51,25 +70,5 @@ clearButton.addEventListener("click", () => {
 
 equalButton.addEventListener("click", () => {
   const calculator = new Calculator(display.value);
-  const [num1, operator, num2] = display.value.split(" ");
-  switch (operator) {
-    case "+":
-      display.value = calculator.add();
-      break;
-    case "-":
-      display.value = calculator.subs();
-      break;
-    case "*":
-      display.value = calculator.multiply();
-      break;
-    case "/":
-      if (num2 === 0) {
-        display.value = "Cannot divide by zero";
-        return;
-      }
-      display.value = calculator.divide();
-      break;
-    default:
-      display.value = "Invalid operator";
-  }
+  display.value = calculator.calculate();
 });
